@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reda School App</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    .hidden { display: none; }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .input, .select, .button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    .button {
+      background-color: #4f46e5;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .tab-button {
+      margin: 0 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      background-color: #eee;
+      border-radius: 8px;
+    }
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+    .text-green { color: green; }
+  </style>
+</head>
+<body>
+
+  <!-- Login Section -->
+  <div id="login-section" class="card">
+    <h2 class="text-center">Connexion Reda School</h2>
+    <input id="username" class="input" type="text" placeholder="Nom d'utilisateur" />
+    <input id="password" class="input" type="password" placeholder="Mot de passe" />
+    <button class="button" onclick="handleLogin()">Se connecter</button>
+    <p class="text-center" style="font-size: 14px; color: #666;">admin/admin ou student/student</p>
+  </div>
+
+  <!-- App Section -->
+  <div id="app-section" class="hidden">
+    <h1 class="text-center" id="role-title"></h1>
+
+    <div class="tabs">
+      <div class="tab-button" onclick="switchTab('fr')">Français</div>
+      <div class="tab-button" onclick="switchTab('ar')">العربية</div>
+    </div>
+
+    <!-- French Tab -->
+    <div id="tab-fr">
+      <div class="card">
+        <h2>Bienvenue chez Reda School</h2>
+        <p>Centre de langues et de soutien scolaire pour tous les niveaux.</p>
+      </div>
+
+      <div id="register-form" class="card">
+        <h2>Formulaire d'inscription</h2>
+        <input class="input" type="text" placeholder="Nom complet" id="name" />
+        <input class="input" type="email" placeholder="Email" id="email" />
+        <input class="input" type="text" placeholder="Téléphone" id="phone" />
+        <input class="input" type="text" placeholder="Niveau scolaire" id="level" />
+        <select class="select" id="course">
+          <option disabled selected>Choisir le type de cours</option>
+          <option value="langue">Cours de langues</option>
+          <option value="soutien">Soutien scolaire</option>
+        </select>
+        <button class="button" onclick="handleRegister()">S'inscrire</button>
+      </div>
+
+      <div id="register-success" class="card text-green text-center hidden">
+        Inscription réussie ! Merci de nous avoir contactés.
+      </div>
+
+      <button class="button">Accéder aux fonctionnalités</button>
+    </div>
+
+    <!-- Arabic Tab -->
+    <div id="tab-ar" class="hidden">
+      <div class="card text-right">
+        <h2>مرحبًا بكم في Reda School</h2>
+        <p>مركز لغات ودعم مدرسي لجميع المستويات.</p>
+      </div>
+      <div class="card text-right">
+        <h2>الوظائف</h2>
+        <ul>
+          <li>تسجيل التلاميذ</li>
+          <li>جدول الحصص</li>
+          <li>مراسلة بين الآباء والأساتذة</li>
+          <li>تتبع النقاط</li>
+        </ul>
+      </div>
+      <button class="button">عرض الخصائص</button>
+    </div>
+  </div>
+
+  <script>
+    function handleLogin() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if ((user === "admin" && pass === "admin") || (user === "student" && pass === "student")) {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('app-section').classList.remove('hidden');
+        document.getElementById('role-title').innerText = user === "admin" ? "Espace Administrateur" : "Espace Élève / Parent";
+      } else {
+        alert("Identifiants incorrects");
+      }
+    }
+
+    function switchTab(lang) {
+      document.getElementById('tab-fr').classList.add('hidden');
+      document.getElementById('tab-ar').classList.add('hidden');
+      document.getElementById('tab-' + lang).classList.remove('hidden');
+    }
+
+    function handleRegister() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const level = document.getElementById('level').value;
+      const course = document.getElementById('course').value;
+
+      if (name && email && phone && level && course) {
+        document.getElementById('register-form').classList.add('hidden');
+        document.getElementById('register-success').classList.remove('hidden');
+      } else {
+        alert("Veuillez remplir tous les champs.");
+      }
+    }
+  </script>
+</body>
+</html>
